@@ -1,0 +1,10 @@
+---
+
+win_users_admin_pass: ~
+# The admin password
+
+win_users_users: []
+# A list of users to create. Available keys:
+# name: the name of the user
+# groups: a list of groups to add the user to
+# password: the password of the user

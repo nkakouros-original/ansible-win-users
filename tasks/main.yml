@@ -1,0 +1,25 @@
+---
+
+- name: Set admin pass
+  win_user:
+    name: Administrator
+    password: "{{ win_users_admin_pass }}"
+    group_action: add
+
+- name: Create users
+  win_user:
+    name: "{{ item.name }}"
+    account_disabled: "{{ item.account_disabled | default(false) }}"
+    account_locked: "{{ item.account_locked | default(false) }}"
+    description: "{{ item.description | default(omit) }}"
+    fullname: "{{ item.fullname | default(omit) }}"
+    group: "{{ item.groups }}"
+    group_action: "{{ item.group_action | default('add') }}"
+    password: "{{ item.password }}"
+    password_expired: "{{ item.password_expired | default(false) }}"
+    password_never_expires: "{{ item.password_expires | default(true) }}"
+    update_password: "{{ item.update_password | default('always') }}"
+    user_cannot_change_password: "{{ item.user_cannot_change_password
+                                      | default(false) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ win_users_users }}"
