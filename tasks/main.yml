@@ -6,6 +6,11 @@
     password: "{{ win_users_admin_pass }}"
     group_action: add
 
+- name: Create user groups
+  win_group:
+    name: "{{ item.1 }}"
+  loop: "{{ win_users_users | subelements('groups') }}"
+
 - name: Create users
   win_user:
     name: "{{ item.name }}"
@@ -13,9 +18,9 @@
     account_locked: "{{ item.account_locked | default(false) }}"
     description: "{{ item.description | default(omit) }}"
     fullname: "{{ item.fullname | default(omit) }}"
-    group: "{{ item.groups }}"
+    groups: "{{ item.groups | join(',') }}"
     group_action: "{{ item.group_action | default('add') }}"
-    password: "{{ item.password }}"
+    password: "{{ item.pass }}"
     password_expired: "{{ item.password_expired | default(false) }}"
     password_never_expires: "{{ item.password_expires | default(true) }}"
     update_password: "{{ item.update_password | default('always') }}"
