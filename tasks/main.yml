@@ -4,7 +4,7 @@
   win_user:
     name: Administrator
     password: "{{ win_users_admin_pass }}"
-    group_action: add
+    groups_action: add
 
 - name: Create user groups
   win_group:
@@ -19,7 +19,7 @@
     description: "{{ item.description | default(omit) }}"
     fullname: "{{ item.fullname | default(omit) }}"
     groups: "{{ item.groups | join(',') }}"
-    group_action: "{{ item.group_action | default('add') }}"
+    groups_action: "{{ item.group_action | default('add') }}"
     password: "{{ item.pass }}"
     password_expired: "{{ item.password_expired | default(false) }}"
     password_never_expires: "{{ item.password_expires | default(true) }}"
